@@ -1,0 +1,11 @@
+export const LOGIN = "LOGIN";
+export const LOGOUT = "LOGOUT";
+export const SIGNUP = "SIGNUP";
+export const LOAD_USER = "LOAD_USER";
+export const LOAD_CARS = "LOAD_CARS";
+export const LOAD_ORDER = "LOAD_ORDER";
+export const CREATE_ORDER = "CREATE_ORDER";
+export const CREATE_REPAIR = "CREATE_REPAIR";
+export const UPDATE_REPAIR = "UPDATE_REPAIR";
+export const ADD_ITEM = "ADD_ITEM";
+export const SAVE_MESSAGES = "SAVE_MESSAGES";
