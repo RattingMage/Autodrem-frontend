@@ -43,7 +43,7 @@ const Dashboard = ({isAuthenticated, order_id, username, password, add_items}) =
             password: password,
             item_price: spare.price,
             order_id: order_id,
-            service_id: services.id
+            service_id: spare.id
         });
     }
 

@@ -37,7 +37,7 @@ const Catalog = ({isAuthenticated, order_id, username, password, add_items}) => 
     };
 
     const handleAddCart = (event, value, spare) => {
-        add_items({username: username, password: password, item_price: spare.price, order_id: order_id, spare_id: spare.id});
+        add_items({username: username, password: password, item_price: spare.price, order_id: order_id, spare_id: spare.id, service_id: 1});
     }
 
     useEffect(() => {
