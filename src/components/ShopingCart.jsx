@@ -11,10 +11,10 @@ import {
     Typography
 } from '@mui/material';
 import {connect} from "react-redux";
-import {create_order, load_order} from "../actions/service";
+import {create_order, load_order, update_order} from "../actions/service";
 import {Navigate} from "react-router-dom";
 
-const ShoppingCart = ({isAuthenticated, order_id, items, final_price, status, user, repair_request, user_id, username, password, load_order, create_order}) => {
+const ShoppingCart = ({isAuthenticated, order_id, items, final_price, status, user, repair_request, user_id, username, password, load_order, create_order, update_order}) => {
     const [order, setOrder] = useState({
         order_id: null,
         items: [],
@@ -43,7 +43,9 @@ const ShoppingCart = ({isAuthenticated, order_id, items, final_price, status, us
     }, []);
 
     const calculateTotal = () => {
-        return order.items.reduce((total, item) => total + Number(item.item_price), 0);
+        const final_price = order.items.reduce((total, item) => total + Number(item.item_price), 0);
+        update_order({username: username, password: password, final_price: final_price, order_id: order_id})
+        return final_price;
     };
 
     if (!isAuthenticated){
@@ -100,4 +102,4 @@ const mapStateToProps = state => ({
     password: state.auth.password,
 });
 
-export default connect(mapStateToProps, { load_order, create_order })(ShoppingCart);
+export default connect(mapStateToProps, { load_order, create_order, update_order })(ShoppingCart);

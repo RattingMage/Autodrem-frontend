@@ -1,5 +1,13 @@
 import axios from "axios";
-import {LOAD_ORDER, CREATE_ORDER, ADD_ITEM, CREATE_REPAIR, SAVE_MESSAGES, UPDATE_REPAIR} from "../reducers/types";
+import {
+    LOAD_ORDER,
+    CREATE_ORDER,
+    ADD_ITEM,
+    CREATE_REPAIR,
+    SAVE_MESSAGES,
+    UPDATE_REPAIR,
+    UPDATE_ORDER
+} from "../reducers/types";
 
 export const load_order = (payload) => async dispatch => {
     const token = btoa(`${payload.username}:${payload.password}`);
@@ -39,6 +47,26 @@ export const create_order = (payload) => async dispatch => {
     }
 };
 
+export const update_order = (payload) => async dispatch => {
+    const token = btoa(`${payload.username}:${payload.password}`);
+
+    const config = {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Basic ${token}`,
+        }
+    };
+
+    const body = JSON.stringify({final_price: payload.final_price});
+
+    try {
+        const res = await axios.patch(`http://127.0.0.1:8000/api/service/orders/${payload.order_id}/`, body, config);
+        dispatch({type: UPDATE_ORDER, payload: res.data});
+    } catch (err) {
+        console.log(`${err}`);
+    }
+};
+
 export const add_items = (payload) => async dispatch => {
     const token = btoa(`${payload.username}:${payload.password}`);
 
@@ -49,7 +77,13 @@ export const add_items = (payload) => async dispatch => {
         }
     };
 
-    const body = JSON.stringify({item_price: payload.item_price, order: payload.order_id, service: 1, spare: payload.spare_id});
+    const body = JSON.stringify({
+        item_price: payload.item_price,
+        order: payload.order_id,
+        spare: payload.spare_id,
+        service: payload.service_id,
+        },
+    );
 
     try {
         const res = await axios.post(`http://127.0.0.1:8000/api/service/order-items/`, body, config);

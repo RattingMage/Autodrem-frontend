@@ -1,4 +1,4 @@
-import {LOAD_ORDER, CREATE_ORDER, ADD_ITEM, CREATE_REPAIR, SAVE_MESSAGES, UPDATE_REPAIR} from "./types";
+import {LOAD_ORDER, CREATE_ORDER, ADD_ITEM, CREATE_REPAIR, SAVE_MESSAGES, UPDATE_REPAIR, UPDATE_ORDER} from "./types";
 
 const initialState = {
     order_id: null,
@@ -27,6 +27,15 @@ const serviceReducer = (state = initialState, action) => {
             return {
                 ...state,
                 order_id: payload.id,
+                final_price: payload.final_price,
+                status: payload.status,
+                user: payload.user,
+                repair_request: payload.repair_request,
+                items: payload.items
+            }
+        case UPDATE_ORDER:
+            return {
+                ...state,
                 final_price: payload.final_price,
                 status: payload.status,
                 user: payload.user,
