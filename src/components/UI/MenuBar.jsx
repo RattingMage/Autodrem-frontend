@@ -14,6 +14,12 @@ import {Link} from "react-router-dom";
 import {connect} from "react-redux";
 
 const pages = ['home', 'repair', 'catalog', 'dashboard'];
+const dict_pages = {
+    'home': "Главная страница",
+    'repair': "Оставить заявку",
+    'catalog': "Каталог",
+    'dashboard': "Услуги",
+}
 
 export const MenuBar = ({ isAuthenticated }) => {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -46,7 +52,7 @@ export const MenuBar = ({ isAuthenticated }) => {
                             textDecoration: 'none',
                         }}
                     >
-                        Auto.Drem
+                        Авто.Дрём
                     </Typography>
                     <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
                         <IconButton
@@ -86,7 +92,7 @@ export const MenuBar = ({ isAuthenticated }) => {
                                         onClick={handleCloseNavMenu}
                                         sx={{ display: 'block' }}
                                     >
-                                        {page}
+                                        {dict_pages[page]}
                                     </Button>
                                 </MenuItem>
                             ))}
@@ -109,7 +115,7 @@ export const MenuBar = ({ isAuthenticated }) => {
                             textDecoration: 'none',
                         }}
                     >
-                        Auto.drem
+                        Авто.Дрём
                     </Typography>
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                         {pages.map((page) => (
@@ -120,13 +126,13 @@ export const MenuBar = ({ isAuthenticated }) => {
                                 onClick={handleCloseNavMenu}
                                 sx={{ my: 2, color: 'white', display: 'block' }}
                             >
-                                {page}
+                                {dict_pages[page]}
                             </Button>
                         ))}
                     </Box>
                     {
                         isAuthenticated ?
-                            <Fragment>
+                            <Fragment >
                                 <IconButton
                                     size="large"
                                     aria-label="account of current user"
@@ -152,8 +158,8 @@ export const MenuBar = ({ isAuthenticated }) => {
                             </Fragment>
                     :
                             <Fragment>
-                                <Button component={Link} to="/login" color="inherit">Login</Button>
-                                <Button component={Link} to="/signup" color="inherit">Sign up</Button>
+                                <Button component={Link} to="/login" color="inherit">Вход</Button>
+                                <Button component={Link} to="/signup" color="inherit">Регистрация</Button>
                             </Fragment>
                     }
                 </Toolbar>

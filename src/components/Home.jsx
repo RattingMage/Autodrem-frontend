@@ -24,7 +24,7 @@ const Home = ({isAuthenticated, is_staff, username, password, user_id, order_id,
         <div>
             <Container maxWidth="md">
                 <Typography variant="h2" gutterBottom>
-                    Добро пожаловать в магазин автозапчастей Auto.Drem
+                    Добро пожаловать в магазин автозапчастей Авто.Дрём
                 </Typography>
 
                 <Typography variant="body1" paragraph>

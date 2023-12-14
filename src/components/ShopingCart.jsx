@@ -83,7 +83,7 @@ const ShoppingCart = ({isAuthenticated, order_id, items, final_price, status, us
             </div>
 
             <Button variant="contained" color="primary" style={{ marginTop: '20px' }}>
-                Checkout
+                Оплатить
             </Button>
         </div>
     );
