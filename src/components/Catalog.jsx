@@ -73,7 +73,7 @@ const Catalog = ({isAuthenticated, order_id, username, password, add_items}) => 
                                 </Typography>
                                 { isAuthenticated ?
                                 <Button variant="contained" color="primary" onClick={(event) => handleAddCart(event, page, spare)}>
-                                    Add to Cart
+                                    Добавить в корзину
                                 </Button>
                                     : <div></div>
                                 }

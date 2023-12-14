@@ -42,7 +42,7 @@ const Chat = ({disable, username,  repair_id, save_messages, state_messages}) =>
         //     setIsLoad(true);
         // }
 
-        const pusher = new Pusher('1b73ff2cb6205e81e98b', {
+        const pusher = new Pusher('b7d750bea58ede14a865', {
             cluster: 'eu',
             encrypted: true,
         });

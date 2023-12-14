@@ -61,9 +61,9 @@ const ShoppingCart = ({isAuthenticated, order_id, items, final_price, status, us
                 <Table>
                     <TableHead>
                         <TableRow>
-                            <TableCell>Price</TableCell>
-                            <TableCell>Service</TableCell>
-                            <TableCell>Spare</TableCell>
+                            <TableCell>Цена</TableCell>
+                            <TableCell>Услуга</TableCell>
+                            <TableCell>Запчасть</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -72,6 +72,7 @@ const ShoppingCart = ({isAuthenticated, order_id, items, final_price, status, us
                                 <TableCell>{item.item_price}</TableCell>
                                 <TableCell>{item.service}</TableCell>
                                 <TableCell>{item.spare}</TableCell>
+                                <TableCell></TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
