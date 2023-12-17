@@ -12,6 +12,7 @@ import {FormControl, InputAdornment, InputLabel, OutlinedInput, Paper, Typograph
 import {makeStyles} from "@material-ui/core/styles";
 import axios from "axios";
 import dayjs from "dayjs";
+import IndexSelect from "./UI/IndexSelect";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -27,6 +28,14 @@ const Repair = ({username, password, is_staff, repair_id, state_messages, update
     const [isRepairCreated, setIsRepairCreated] = useState(true)
     const [requests, setRequests] = useState([])
     const [value, setValue] = React.useState(dayjs());
+    const [selectedIndex, setSelectedIndex] = useState(0); // Индекс, выбранный по умолчанию
+
+    const indexArray = [0, 1, 2, 3, 4]; // Ваш массив индексов
+
+    const handleIndexChange = (index) => {
+        setSelectedIndex(index);
+        // Здесь вы можете выполнить дополнительные действия при изменении индекса
+    };
 
     useEffect( () => {
         async function load_request() {
@@ -59,6 +68,11 @@ const Repair = ({username, password, is_staff, repair_id, state_messages, update
         update_repair({username: username, password: password, problem: problem, repair_id: repair_id})
         if(isRepairCreated) setIsRepairCreated((prevIsRepairCreated) => !prevIsRepairCreated);
     };
+
+    const handleSaveRequest = () => {
+
+    };
+
     const handleOpen = () => {
         setIsRepairCreated((prevIsRepairCreated) => !prevIsRepairCreated);
     }
@@ -74,30 +88,31 @@ const Repair = ({username, password, is_staff, repair_id, state_messages, update
                         <Box
                             component="form"
                             sx={{
-                                '& .MuiTextField-root': { m: "10px", width: '25ch' },
-                                '& .MuiBox-root': { m: 1, width: '25ch' },
+                                '& .MuiTextField-root': {m: "10px", width: '28ch'},
+                                '& .MuiBox-root': {m: "10px", width: '28ch'},
                             }}
                             noValidate
                             autoComplete="off"
                         >
-                            <Box >
+                            <Box>
                                 <TextField
                                     id="outlined-helperText"
                                     label="Проблема"
                                     defaultValue={request.problem}
                                 />
                             </Box>
-                            <Box>
+                            <Box >
                                 <DatePicker
                                     label="Дедлайн выполнения"
                                     value={value}
                                     onChange={(newValue) => setValue(newValue)}
-                                    sx={{ m: 1 }}
+                                    sx={{m: 1}}
                                 />
                             </Box>
-                            <Box sx={{ pl: 1}}>
-                                <FormControl fullWidth sx={{ m: 1 }}>
-                                    <InputLabel htmlFor="outlined-adornment-amount" size="small">Стоимость</InputLabel>
+                            <Box sx={{pl: 1}}>
+                                <FormControl fullWidth sx={{m: 1}}>
+                                    <InputLabel htmlFor="outlined-adornment-amount"
+                                                sx={{marginTop: '-12px'}}>Стоимость</InputLabel>
                                     <OutlinedInput
                                         id="outlined-adornment-amount"
                                         endAdornment={<InputAdornment position="end">$</InputAdornment>}
@@ -107,29 +122,23 @@ const Repair = ({username, password, is_staff, repair_id, state_messages, update
                                     />
                                 </FormControl>
                             </Box>
-
-                            <TextField
-                                id="outlined-helperText"
-                                gutterBottom
-                                label="Стоимость"
-                                defaultValue={request.cost ? `${request.cost} руб.` : 'Не указана'}
-                            />
-                            <TextField
-                                id="outlined-helperText"
-                                gutterBottom
-                                label="Исполнители"
-                                defaultValue={request.employees.length > 0 ? request.employees.join(', ') : 'Нет'}
-                            />
-                            <TextField
-                                id="outlined-helperText"
-                                gutterBottom
-                                label="Услуги"
-                                defaultValue={request.services.length > 0 ? request.services.join(', ') : 'Нет'}
-                            />
+                            <Box sx={{pl: 1}}>
+                                <IndexSelect isService={1} indexArray={request.services} onSelectChange={handleIndexChange}/>
+                            </Box>
+                            <Box sx={{pl: 1}}>
+                                <IndexSelect isService={0} indexArray={request.employees} onSelectChange={handleIndexChange}/>
+                            </Box>
+                            <Box sx={{pl: 1}}>
+                                <Button variant="contained" color="primary" onClick={handleSaveRequest}>
+                                    Сохранить
+                                </Button>
+                            </Box>
                         </Box>
-                        <Button variant="contained" color="primary" onClick={handleOpen}>
-                            Открыть чат
-                        </Button>
+                        <Box>
+                            <Button variant="contained" color="primary" onClick={handleOpen}>
+                                Открыть чат
+                            </Button>
+                        </Box>
                         <Chat disable={isRepairCreated} username={username} repair_id={request.id} save_messages={save_messages} state_messages={state_messages}/>
                     </Paper>
                 ))}
