@@ -10,3 +10,4 @@ export const CREATE_REPAIR = "CREATE_REPAIR";
 export const UPDATE_REPAIR = "UPDATE_REPAIR";
 export const ADD_ITEM = "ADD_ITEM";
 export const SAVE_MESSAGES = "SAVE_MESSAGES";
+export const ERROR = "ERROR";

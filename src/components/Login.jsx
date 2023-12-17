@@ -32,14 +32,21 @@ const Login = ({ isAuthenticated, login }) => {
         password: '',
     });
 
+    const [error, setError] = useState(null);
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
+        setError(null);
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        login(formData)
+        try {
+            await login(formData);
+        } catch (error) {
+            setError("Неверный логин или пароль");
+        }
     };
 
     if (isAuthenticated){
@@ -54,6 +61,11 @@ const Login = ({ isAuthenticated, login }) => {
                         Авторизация
                     </Typography>
                     <form className={classes.form} onSubmit={handleSubmit}>
+                        {error && (
+                            <Typography variant="body2" color="error" align="center">
+                                {error}
+                            </Typography>
+                        )}
                         <TextField
                             variant="outlined"
                             margin="normal"
@@ -94,7 +106,7 @@ const Login = ({ isAuthenticated, login }) => {
 };
 
 const mapStateToProps = state => ({
-    isAuthenticated: state.auth.isAuthenticated
+    isAuthenticated: state.auth.isAuthenticated,
 });
 
 export default connect(mapStateToProps, {login})(Login);

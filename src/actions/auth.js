@@ -1,5 +1,5 @@
 import axios from "axios";
-import {LOAD_CARS, LOAD_USER, LOGIN, LOGOUT} from "../reducers/types";
+import {ERROR, LOAD_CARS, LOAD_USER, LOGIN, LOGOUT} from "../reducers/types";
 
 export const load = (payload) => async dispatch => {
     const token = btoa(`${payload.username}:${payload.password}`);
@@ -34,14 +34,9 @@ export const login = (payload) => async dispatch => {
 
     const body = JSON.stringify({username: payload.username, password: payload.password});
 
-    try {
-        const res = await axios.post(`http://127.0.0.1:8000/api/auth/login/`, body, config);
-        const dt = {...res.data, password : payload.password}
-        dispatch({type: LOGIN, payload: dt});
-    } catch (err) {
-        console.log(`${err}`)
-        dispatch({type: LOGOUT});
-    }
+    const res = await axios.post(`http://127.0.0.1:8000/api/auth/login/`, body, config);
+    const dt = {...res.data, password : payload.password}
+    dispatch({type: LOGIN, payload: dt});
 };
 
 export const signup = (payload) => async dispatch => {
@@ -53,13 +48,8 @@ export const signup = (payload) => async dispatch => {
 
     const body = JSON.stringify({username: payload.username, password: payload.password, password_repeat: payload.password_repeat});
 
-    try {
-        const res = await axios.post(`http://127.0.0.1:8000/api/auth/signup/`, body, config);
-        dispatch({type: LOGIN, payload: res.data});
-    } catch (err) {
-        console.log(`${err}`)
-        dispatch({type: LOGOUT});
-    }
+    const res = await axios.post(`http://127.0.0.1:8000/api/auth/signup/`, body, config);
+    dispatch({type: LOGIN, payload: res.data});
 };
 
 export const logout = () => dispatch => (dispatch({type: LOGOUT}));

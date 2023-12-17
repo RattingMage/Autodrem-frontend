@@ -1,4 +1,4 @@
-import {LOAD_CARS, LOAD_USER, LOGIN, LOGOUT, SIGNUP} from "./types";
+import {ERROR, LOAD_CARS, LOAD_USER, LOGIN, LOGOUT, SIGNUP} from "./types";
 
 const initialState = {
     id: null,
@@ -9,7 +9,8 @@ const initialState = {
     email:"",
     isAuthenticated: false,
     isStaff: false,
-    cars: []
+    cars: [],
+    error: "",
 };
 
 const authReducer = (state = initialState, action) => {
@@ -58,6 +59,11 @@ const authReducer = (state = initialState, action) => {
                 ...state,
                 cars: [payload.cars],
             };
+        case ERROR:
+            return {
+                ...state,
+                error: payload.error,
+            }
         default:
             console.log("default");
             return state;

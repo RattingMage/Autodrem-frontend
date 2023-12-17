@@ -4,12 +4,14 @@ import {
     Button,
 } from '@material-ui/core';
 import Box from "@mui/material/Box";
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import Chat from "./UI/Chat";
 import {connect} from "react-redux";
 import {save_messages, update_repair} from "../actions/service";
-import {Paper, Typography} from "@mui/material";
+import {FormControl, InputAdornment, InputLabel, OutlinedInput, Paper, Typography} from "@mui/material";
 import {makeStyles} from "@material-ui/core/styles";
 import axios from "axios";
+import dayjs from "dayjs";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -24,6 +26,7 @@ const Repair = ({username, password, is_staff, repair_id, state_messages, update
     const [problem, setProblem] = useState('');
     const [isRepairCreated, setIsRepairCreated] = useState(true)
     const [requests, setRequests] = useState([])
+    const [value, setValue] = React.useState(dayjs());
 
     useEffect( () => {
         async function load_request() {
@@ -71,24 +74,40 @@ const Repair = ({username, password, is_staff, repair_id, state_messages, update
                         <Box
                             component="form"
                             sx={{
-                                '& .MuiTextField-root': { m: 1, width: '25ch' },
+                                '& .MuiTextField-root': { m: "10px", width: '25ch' },
+                                '& .MuiBox-root': { m: 1, width: '25ch' },
                             }}
                             noValidate
                             autoComplete="off"
                         >
-                            <div >
+                            <Box >
                                 <TextField
                                     id="outlined-helperText"
                                     label="Проблема"
                                     defaultValue={request.problem}
                                 />
-                            </div>
-                            <TextField
-                                id="outlined-helperText"
-                                gutterBottom
-                                label="Дедлайн выполнения"
-                                defaultValue={request.execution_deadline || 'Не указан'}
-                            />
+                            </Box>
+                            <Box>
+                                <DatePicker
+                                    label="Дедлайн выполнения"
+                                    value={value}
+                                    onChange={(newValue) => setValue(newValue)}
+                                    sx={{ m: 1 }}
+                                />
+                            </Box>
+                            <Box sx={{ pl: 1}}>
+                                <FormControl fullWidth sx={{ m: 1 }}>
+                                    <InputLabel htmlFor="outlined-adornment-amount" size="small">Стоимость</InputLabel>
+                                    <OutlinedInput
+                                        id="outlined-adornment-amount"
+                                        endAdornment={<InputAdornment position="end">$</InputAdornment>}
+                                        label="Стоимость"
+
+                                        sx={{pl: "5px"}}
+                                    />
+                                </FormControl>
+                            </Box>
+
                             <TextField
                                 id="outlined-helperText"
                                 gutterBottom

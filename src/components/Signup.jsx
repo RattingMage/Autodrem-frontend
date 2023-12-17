@@ -34,14 +34,25 @@ const Signup = ({isAuthenticated, signup}) => {
         password_repeat: '',
     });
 
+    const [error, setError] = useState(null);
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
+        setError(null);
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        signup(formData)
+
+        if(formData["password"] === formData["password_repeat"]){
+            try {
+                await signup(formData);
+            } catch (error) {
+                setError("Неверный логин или пароль");
+            }
+        }
+        else setError("Пароли не совпадают");
     };
 
     if (isAuthenticated){
@@ -56,6 +67,11 @@ const Signup = ({isAuthenticated, signup}) => {
                         Регистрация
                     </Typography>
                     <form className={classes.form} onSubmit={handleSubmit}>
+                        {error && (
+                            <Typography variant="body2" color="error" align="center">
+                                {error}
+                            </Typography>
+                        )}
                         <TextField
                             variant="outlined"
                             margin="normal"
