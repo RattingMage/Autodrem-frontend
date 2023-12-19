@@ -54,9 +54,9 @@ const DataDisplay = ({ data, onAdd }) => {
         <TableBody>
           {formData.map((item) => (
               <TableRow key={item.id}>
-                <TableCell>{item.license_plate}</TableCell>
-                <TableCell>{item.brand}</TableCell>
-                <TableCell>{item.vin}</TableCell>
+                <TableCell sx={{ color: "white" }}>{item.license_plate}</TableCell>
+                <TableCell sx={{ color: "white" }}>{item.brand}</TableCell>
+                <TableCell sx={{ color: "white" }}>{item.vin}</TableCell>
               </TableRow>
           ))}
           <TableRow>
@@ -105,9 +105,9 @@ const DataDisplay = ({ data, onAdd }) => {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell>Гос. номер</TableCell>
-                <TableCell>Марка</TableCell>
-                <TableCell>ВИН номер</TableCell>
+                <TableCell sx={{ color: "white" }}>Гос. номер</TableCell>
+                <TableCell sx={{ color: "white" }}>Марка</TableCell>
+                <TableCell sx={{ color: "white" }}>ВИН номер</TableCell>
               </TableRow>
             </TableHead>
             {generateTableBody()}

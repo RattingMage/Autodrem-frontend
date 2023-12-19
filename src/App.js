@@ -18,7 +18,7 @@ const theme = createTheme({
     palette: {
         contrastThreshold: 4.5,
         background: {
-            paper: "#39345B"
+            paper: "#2d2d2d"
         }
     },
 });
