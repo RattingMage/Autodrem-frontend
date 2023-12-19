@@ -15,6 +15,9 @@ const Profile = ({isAuthenticated, username, password, first_name, last_name, em
         email: '',
         cars: [],
     });
+    const [error, setError] = useState(false);
+    const [reqError, setReqError] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
 
     useEffect(() => {
         load({username, password});
@@ -28,12 +31,21 @@ const Profile = ({isAuthenticated, username, password, first_name, last_name, em
         })
     }, []);
 
+    const validateEmail = (value) => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(value);
+    };
+
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setUserData((prevData) => ({
             ...prevData,
             [name]: value,
         }));
+
+        if(name === "email") {
+            setError(!validateEmail(value));
+        }
     };
 
     const handleSubmit = async (e) => {
@@ -52,7 +64,8 @@ const Profile = ({isAuthenticated, username, password, first_name, last_name, em
         try {
             const res = await axios.patch(`http://127.0.0.1:8000/api/auth/profile/`, body, config);
         } catch (err) {
-            console.log(`${err}`)
+            setReqError(true);
+            setErrorMessage(`Error updating profile: ${err.message}`);
         }
     };
 
@@ -71,7 +84,8 @@ const Profile = ({isAuthenticated, username, password, first_name, last_name, em
         try {
             const res = await axios.post(`http://127.0.0.1:8000/api/auth/cars/`, body, config);
         } catch (err) {
-            console.log(`${err}`)
+            setReqError(true);
+            setErrorMessage(`Error updating profile: ${err.message}`);
         }
     }
 
@@ -85,6 +99,11 @@ const Profile = ({isAuthenticated, username, password, first_name, last_name, em
                 <Typography component="h1" variant="h5" m={5}>
                     Профиль пользователя
                 </Typography>
+                {reqError && (
+                    <Typography color="error" component="h1" variant="h5" m={5}>
+                        {errorMessage}
+                    </Typography>
+                )}
                 <form onSubmit={handleSubmit}>
                     <Grid container spacing={2} mb={5}>
                         <Grid item xs={12}>
@@ -122,6 +141,8 @@ const Profile = ({isAuthenticated, username, password, first_name, last_name, em
                                 name="email"
                                 value={userData.email}
                                 onChange={handleInputChange}
+                                error={error}
+                                helperText={error ? 'Некорректный email' : ''}
                             />
                         </Grid>
                     </Grid>

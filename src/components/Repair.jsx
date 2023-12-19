@@ -26,6 +26,7 @@ const Repair = ({username, password, is_staff, repair_id, state_messages, update
 
     const [problem, setProblem] = useState('');
     const [isRepairCreated, setIsRepairCreated] = useState(true)
+    const [isRepairLoaded, setIsRepairLoaded] = useState(false)
     const [requests, setRequests] = useState([])
     const [value, setValue] = React.useState(dayjs());
     const [selectedIndex, setSelectedIndex] = useState(0); // Индекс, выбранный по умолчанию
@@ -38,6 +39,7 @@ const Repair = ({username, password, is_staff, repair_id, state_messages, update
     };
 
     useEffect( () => {
+        if (repair_id !== null) setIsRepairLoaded(true)
         async function load_request() {
             const token = btoa(`${username}:${password}`);
 
@@ -145,6 +147,12 @@ const Repair = ({username, password, is_staff, repair_id, state_messages, update
             </div>
         );
     }
+
+    if(!isRepairLoaded) return (
+        <Typography variant="h4" m={2} gutterBottom>
+            Кажется сервис не работает попробуйте заново
+        </Typography>
+    )
 
     return (
         <Box

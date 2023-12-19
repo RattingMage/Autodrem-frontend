@@ -14,11 +14,11 @@ export const load = (payload) => async dispatch => {
     try {
         const res = await axios.get(`http://127.0.0.1:8000/api/auth/profile/`, config);
         dispatch({type: LOAD_USER, payload: res.data});
-        if(res.data['car'] !== null){
-            const res2 = await axios.get(`http://127.0.0.1:8000/api/auth/cars/${res.data['car']}/`, config)
-            const dt = {cars: res2.data};
-            dispatch({type: LOAD_CARS, payload: dt});
-        }
+        // if(res.data['car'] !== null){
+        //     const res2 = await axios.get(`http://127.0.0.1:8000/api/auth/cars/${res.data['car']}/`, config)
+        //     const dt = {cars: res2.data};
+        //     dispatch({type: LOAD_CARS, payload: dt});
+        // }
     } catch (err) {
         console.log(`${err}`)
         dispatch({type: LOGOUT});

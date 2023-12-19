@@ -15,6 +15,7 @@ import {create_order, load_order, update_order} from "../actions/service";
 import {Navigate} from "react-router-dom";
 
 const ShoppingCart = ({isAuthenticated, order_id, items, final_price, status, user, repair_request, user_id, username, password, load_order, create_order, update_order}) => {
+    const [isCalc, setIsCalc] = useState(false)
     const [order, setOrder] = useState({
         order_id: null,
         items: [],
@@ -44,7 +45,10 @@ const ShoppingCart = ({isAuthenticated, order_id, items, final_price, status, us
 
     const calculateTotal = () => {
         const final_price = order.items.reduce((total, item) => total + Number(item.item_price), 0);
-        update_order({username: username, password: password, final_price: final_price, order_id: order_id})
+        if(!isCalc){
+            update_order({username: username, password: password, final_price: final_price, order_id: order_id})
+            setIsCalc(true)
+        }
         return final_price;
     };
 
@@ -61,17 +65,17 @@ const ShoppingCart = ({isAuthenticated, order_id, items, final_price, status, us
                 <Table>
                     <TableHead>
                         <TableRow>
-                            <TableCell>Цена</TableCell>
                             <TableCell>Услуга</TableCell>
                             <TableCell>Запчасть</TableCell>
+                            <TableCell>Цена</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {order.items.map((item) => (
                             <TableRow key={item.id}>
+                                <TableCell>{item.service.name}</TableCell>
+                                <TableCell>{item.spare.name}</TableCell>
                                 <TableCell>{item.item_price}</TableCell>
-                                <TableCell>{item.service}</TableCell>
-                                <TableCell>{item.spare}</TableCell>
                                 <TableCell></TableCell>
                             </TableRow>
                         ))}
@@ -80,7 +84,7 @@ const ShoppingCart = ({isAuthenticated, order_id, items, final_price, status, us
             </TableContainer>
 
             <div style={{ marginTop: '20px' }}>
-                <strong>Total: ${calculateTotal()}</strong>
+                <strong>Общая стоимость: {calculateTotal()}руб.</strong>
             </div>
 
             <Button variant="contained" color="primary" style={{ marginTop: '20px' }}>

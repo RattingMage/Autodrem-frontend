@@ -65,12 +65,6 @@ const Dashboard = ({isAuthenticated, order_id, username, password, add_items}) =
                 {services.results.map((spare) => (
                     <Grid item key={spare.id} xs={12} sm={6} md={4}>
                         <Card>
-                            <CardMedia
-                                component="img"
-                                height="400"
-                                image={spare.image ? spare.image : "/logo512.png"}
-                                alt={spare.name}
-                            />
                             <CardContent>
                                 <Typography variant="h6" gutterBottom>
                                     {spare.name}

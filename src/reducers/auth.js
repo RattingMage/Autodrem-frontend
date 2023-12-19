@@ -53,6 +53,7 @@ const authReducer = (state = initialState, action) => {
                 last_name: payload.last_name,
                 email: payload.email,
                 is_staff: payload.is_staff,
+                cars: payload.cars
             };
         case LOAD_CARS:
             return {

@@ -4,6 +4,8 @@ import { login } from '../actions/auth';
 import {Navigate} from "react-router-dom";
 import {makeStyles} from "@material-ui/core/styles";
 import {Button, Grid, Paper, TextField, Typography} from "@material-ui/core";
+import PropTypes from "prop-types";
+import { useTheme } from '@mui/material/styles';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -25,7 +27,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Login = ({ isAuthenticated, login }) => {
+    const theme = useTheme();
     const classes = useStyles();
+
 
     const [formData, setFormData] = useState({
         username: '',
@@ -54,7 +58,17 @@ const Login = ({ isAuthenticated, login }) => {
     }
 
     return (
-        <Grid container component="main" className={classes.root} justifyContent="center" alignItems="center">
+        <Grid
+            container
+            component="main"
+            className={classes.root}
+            justifyContent="center"
+            alignItems="center"
+            sx={{
+                bgcolor: theme.palette.background.paper,
+                minHeight: '100vh'
+            }}
+        >
             <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
                 <div className={classes.paper}>
                     <Typography component="h1" variant="h5">
@@ -93,7 +107,6 @@ const Login = ({ isAuthenticated, login }) => {
                             type="submit"
                             fullWidth
                             variant="contained"
-                            color="primary"
                             className={classes.submit}
                         >
                             Авторизоваться
@@ -103,6 +116,10 @@ const Login = ({ isAuthenticated, login }) => {
             </Grid>
         </Grid>
     );
+};
+
+Login.propTypes = {
+    color: PropTypes.oneOf(['primary', 'secondary']).isRequired,
 };
 
 const mapStateToProps = state => ({
